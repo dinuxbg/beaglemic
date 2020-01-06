@@ -31,11 +31,11 @@ The schematic is simple. PDM microphones' digital outputs are connected directly
 
 Optionally, high-level software may visualize detected audio direction using a stripe of 16 LEDs hooked to two 74HC595 shift registers:
 
-| PocketBeagle | PB GPIO | BBAI  | BBAI GPIO | Signal |
-|--------------|---------|-------|-----------|--------|
-|              |         | P9.30 | gpio5_12  | DS     |
-|              |         | P9.28 | gpio4_17  | SHCP   |
-|              |         | P9.23 | gpio7_11  | STCP   |
+| PocketBeagle | PB GPIO  | BBAI  | BBAI GPIO | Signal |
+|--------------|----------|-------|-----------|--------|
+| P2.25        | gpio2_9  | P9.30 | gpio5_12  | DS     |
+| P2.29        | gpio1_7  | P9.28 | gpio4_17  | SHCP   |
+| P2.31        | gpio1_19 | P9.23 | gpio7_11  | STCP   |
 
 
 For each microphone pair, one microphone is configured to output data on the rising clock edge, and the other is configured to output data on the falling edge. This way we need only 8 input GPIOs to capture data from all 16 microphones.
