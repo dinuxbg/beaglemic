@@ -17,7 +17,7 @@ Current firmware supports:
 The schematic is simple. PDM microphones' digital outputs are connected directly to the PRU input pins. The PRU also drives the bit clock. I have tested on PocketBeagle and BeagleBone AI.
 
 | PocketBeagle | BBAI  | PRU Pin | Type  | Signal               |
-|----------------------|---------|-------|----------------------|
+|--------------|-------|---------|-------|----------------------|
 | P2.24        | P9.11 | R30_14  | Output| PDM Bit Clock        |
 | P1.36        | P8.44 | R31_0   | Input | MIC0 and MIC1 Data   |
 | P1.33        | P8.41 | R31_1   | Input | MIC2 and MIC3 Data   |
