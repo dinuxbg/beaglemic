@@ -135,6 +135,9 @@ A few ideas to improve the design:
  * [Inspiration for high-bandwidth data acquisition](https://github.com/ZeekHuge/BeagleScope)
 
 # Other Resources
+Below are various other CIC implementations and PDM microphone boards I've stumbled upon.
  * https://github.com/introlab/16SoundsUSB
  * https://github.com/introlab/odas
  * https://respeaker.io/make_a_smart_speaker/
+ * https://github.com/Scrashdown/PRU-Audio-Processing
+ * https://github.com/fakufaku/kurodako
