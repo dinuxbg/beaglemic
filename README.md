@@ -77,7 +77,7 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
 # Running The Example on BeagleBone AI
 
-    # Prebuilt BB AI is provided in this repo. For corresponding
+    # Prebuilt DTBO for BB AI is provided in this repo. For corresponding
     # source change, see driver/0001-Initial-BeagleMic-DTS-for-BBAI.patch
     sudo cp driver/am5729-beagleboneai-beaglemic.dtb /boot/dtbs/`uname -r`/
     sudo sed -i -e 's@#dtb=@dtb=am5729-beagleboneai-beaglemic.dtb@g' /boot/uEnv.txt
@@ -110,9 +110,9 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
 # Folder Structure
 
- * beaglemic-cape - Universal cape for BeagleBone AI, PocketBeagle and iCE40HX8K-EVB. Work in progress.
+ * beaglemic-cape - Universal cape for BeagleBone AI, PocketBeagle and iCE40HX8K-EVB. **Work in progress.**
  * driver - Host ALSA audio driver.
- * inmp621-breakout - INMP621 Microphone breakout. Designed to be used with beaglemic-cape. Work in progress.
+ * inmp621-breakout - INMP621 Microphone breakout. Designed to be optionally used with beaglemic-cape. **Work in progress.**
  * libs - Library code. Currently contains code to drive LED ring for beaglemic-cape.
  * pocket-cape - PocketBeagle cape to be used with spm0423hd4h-breakout.
  * pru - PRU firmware.
