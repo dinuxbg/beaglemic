@@ -6,8 +6,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 3
 Title "PDM Microphones"
-Date "2020-01-19"
-Rev "1.0-rc2"
+Date "2020-01-26"
+Rev "1.0-rc3"
 Comp "dimitar@dinux.eu"
 Comment1 "WARNING - NOT YET VALIDATED!"
 Comment2 ""
@@ -22,7 +22,7 @@ AR Path="/5E1BA68D" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA68D" Ref="PHM-0"  Part="1" 
 F 0 "PHM-0" H 1330 1292 50  0000 L CNN
 F 1 "MIC-00" H 1330 1201 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 1250 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 1250 50  0001 C CNN
 F 3 "~" H 1250 1250 50  0001 C CNN
 	1    1250 1250
 	1    0    0    -1  
@@ -72,7 +72,7 @@ AR Path="/5E1BA6A6" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA6A6" Ref="PHM-1"  Part="1" 
 F 0 "PHM-1" H 2530 1292 50  0000 L CNN
 F 1 "MIC-01" H 2530 1201 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 1250 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 1250 50  0001 C CNN
 F 3 "~" H 2450 1250 50  0001 C CNN
 	1    2450 1250
 	1    0    0    -1  
@@ -126,7 +126,7 @@ AR Path="/5E1BA6C1" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA6C1" Ref="PHM-2"  Part="1" 
 F 0 "PHM-2" H 1330 2042 50  0000 L CNN
 F 1 "MIC-02" H 1330 1951 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 2000 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 2000 50  0001 C CNN
 F 3 "~" H 1250 2000 50  0001 C CNN
 	1    1250 2000
 	1    0    0    -1  
@@ -180,7 +180,7 @@ AR Path="/5E1BA6DC" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA6DC" Ref="PHM-3"  Part="1" 
 F 0 "PHM-3" H 2530 2042 50  0000 L CNN
 F 1 "MIC-03" H 2530 1951 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 2000 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 2000 50  0001 C CNN
 F 3 "~" H 2450 2000 50  0001 C CNN
 	1    2450 2000
 	1    0    0    -1  
@@ -234,7 +234,7 @@ AR Path="/5E1BA6F7" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA6F7" Ref="PHM-4"  Part="1" 
 F 0 "PHM-4" H 1330 2792 50  0000 L CNN
 F 1 "MIC-04" H 1330 2701 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 2750 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 2750 50  0001 C CNN
 F 3 "~" H 1250 2750 50  0001 C CNN
 	1    1250 2750
 	1    0    0    -1  
@@ -288,7 +288,7 @@ AR Path="/5E1BA712" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA712" Ref="PHM-5"  Part="1" 
 F 0 "PHM-5" H 2530 2792 50  0000 L CNN
 F 1 "MIC-05" H 2530 2701 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 2750 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 2750 50  0001 C CNN
 F 3 "~" H 2450 2750 50  0001 C CNN
 	1    2450 2750
 	1    0    0    -1  
@@ -374,7 +374,7 @@ AR Path="/5E1BA73D" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA73D" Ref="PHM-6"  Part="1" 
 F 0 "PHM-6" H 1330 3542 50  0000 L CNN
 F 1 "MIC-06" H 1330 3451 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 3500 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 3500 50  0001 C CNN
 F 3 "~" H 1250 3500 50  0001 C CNN
 	1    1250 3500
 	1    0    0    -1  
@@ -428,7 +428,7 @@ AR Path="/5E1BA758" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA758" Ref="PHM-7"  Part="1" 
 F 0 "PHM-7" H 2530 3542 50  0000 L CNN
 F 1 "MIC-07" H 2530 3451 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 3500 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 3500 50  0001 C CNN
 F 3 "~" H 2450 3500 50  0001 C CNN
 	1    2450 3500
 	1    0    0    -1  
@@ -486,7 +486,7 @@ AR Path="/5E1BA775" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA775" Ref="PHM-8"  Part="1" 
 F 0 "PHM-8" H 1330 4292 50  0000 L CNN
 F 1 "MIC-08" H 1330 4201 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 4250 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 4250 50  0001 C CNN
 F 3 "~" H 1250 4250 50  0001 C CNN
 	1    1250 4250
 	1    0    0    -1  
@@ -536,7 +536,7 @@ AR Path="/5E1BA78E" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA78E" Ref="PHM-9"  Part="1" 
 F 0 "PHM-9" H 2530 4292 50  0000 L CNN
 F 1 "MIC-09" H 2530 4201 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 4250 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 4250 50  0001 C CNN
 F 3 "~" H 2450 4250 50  0001 C CNN
 	1    2450 4250
 	1    0    0    -1  
@@ -590,7 +590,7 @@ AR Path="/5E1BA7A9" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA7A9" Ref="PHM-10"  Part="1" 
 F 0 "PHM-10" H 1330 5042 50  0000 L CNN
 F 1 "MIC-10" H 1330 4951 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 5000 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 5000 50  0001 C CNN
 F 3 "~" H 1250 5000 50  0001 C CNN
 	1    1250 5000
 	1    0    0    -1  
@@ -644,7 +644,7 @@ AR Path="/5E1BA7C4" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA7C4" Ref="PHM-11"  Part="1" 
 F 0 "PHM-11" H 2530 5042 50  0000 L CNN
 F 1 "MIC-11" H 2530 4951 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 5000 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 5000 50  0001 C CNN
 F 3 "~" H 2450 5000 50  0001 C CNN
 	1    2450 5000
 	1    0    0    -1  
@@ -698,7 +698,7 @@ AR Path="/5E1BA7DF" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA7DF" Ref="PHM-12"  Part="1" 
 F 0 "PHM-12" H 1330 5792 50  0000 L CNN
 F 1 "MIC-12" H 1330 5701 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 5750 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 5750 50  0001 C CNN
 F 3 "~" H 1250 5750 50  0001 C CNN
 	1    1250 5750
 	1    0    0    -1  
@@ -752,7 +752,7 @@ AR Path="/5E1BA7FA" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA7FA" Ref="PHM-13"  Part="1" 
 F 0 "PHM-13" H 2530 5792 50  0000 L CNN
 F 1 "MIC-13" H 2530 5701 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 5750 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 5750 50  0001 C CNN
 F 3 "~" H 2450 5750 50  0001 C CNN
 	1    2450 5750
 	1    0    0    -1  
@@ -838,7 +838,7 @@ AR Path="/5E1BA825" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA825" Ref="PHM-14"  Part="1" 
 F 0 "PHM-14" H 1330 6542 50  0000 L CNN
 F 1 "MIC-14" H 1330 6451 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 1250 6500 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 1250 6500 50  0001 C CNN
 F 3 "~" H 1250 6500 50  0001 C CNN
 	1    1250 6500
 	1    0    0    -1  
@@ -892,7 +892,7 @@ AR Path="/5E1BA840" Ref="J?"  Part="1"
 AR Path="/5E1B9A68/5E1BA840" Ref="PHM-15"  Part="1" 
 F 0 "PHM-15" H 2530 6542 50  0000 L CNN
 F 1 "MIC-15" H 2530 6451 50  0000 L CNN
-F 2 "pinheader-smd:pinheader-5-smd-pads" H 2450 6500 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical" H 2450 6500 50  0001 C CNN
 F 3 "~" H 2450 6500 50  0001 C CNN
 	1    2450 6500
 	1    0    0    -1  

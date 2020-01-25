@@ -23,6 +23,7 @@ def main():
         p = polar2z(r,a) + CENTER
         a_deg = (a * 180) / pi
         print("mic%02d: rot %f: %f x %f" % (i, -a_deg, p.real, p.imag))
+        print("PHM%02d: rot %f: %f x %f" % (i, -a_deg + 11.125, p.real, p.imag))
 
 if __name__ == "__main__":
     main()

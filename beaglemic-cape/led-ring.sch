@@ -6,8 +6,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
 Title "LED Ring"
-Date "2020-01-19"
-Rev "1.0-rc2"
+Date "2020-01-26"
+Rev "1.0-rc3"
 Comp "dimitar@dinux.eu"
 Comment1 "WARNING - NOT YET VALIDATED!"
 Comment2 ""

@@ -6,8 +6,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
 Title "BeagleMic Cape"
-Date "2020-01-19"
-Rev "1.0-rc2"
+Date "2020-01-26"
+Rev "1.0-rc3"
 Comp "dimitar@dinux.eu"
 Comment1 "WARNING - NOT YET VALIDATED!"
 Comment2 ""
@@ -981,15 +981,6 @@ F 3 "" H 950 6050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	950  5900 950  5950
-Wire Wire Line
-	950  5950 1050 5950
-Wire Wire Line
-	1050 5950 1050 5900
-Connection ~ 950  5950
-Wire Wire Line
-	950  5950 950  6050
-Wire Wire Line
 	1350 5300 1950 5300
 Wire Wire Line
 	1350 5500 1950 5500
@@ -1365,19 +1356,28 @@ Wire Wire Line
 	3600 7000 3600 7400
 Wire Wire Line
 	3300 7400 3600 7400
+Connection ~ 3600 7400
+Wire Wire Line
+	3600 7400 3600 7500
+Wire Wire Line
+	1050 5950 1050 5900
+Wire Wire Line
+	950  5950 950  6050
+Wire Wire Line
+	950  5950 1050 5950
+Connection ~ 950  5950
+Wire Wire Line
+	950  5900 950  5950
 Wire Bus Line
 	11050 750  11050 2550
 Wire Bus Line
-	4550 750  4550 2850
-Wire Bus Line
 	2500 650  10950 650 
+Wire Bus Line
+	4550 750  4550 2850
 Wire Bus Line
 	8800 750  8800 3250
 Wire Bus Line
 	2400 750  2400 3550
 Wire Bus Line
 	6650 750  6650 5700
-Connection ~ 3600 7400
-Wire Wire Line
-	3600 7400 3600 7500
 $EndSCHEMATC
