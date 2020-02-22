@@ -6,10 +6,10 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "INMP621 PDM Microphone Breakout"
-Date "2020-01-04"
-Rev "1.0-rc1"
+Date "2020-02-22"
+Rev "1.0"
 Comp "dimitar@dinux.eu"
-Comment1 "NOT YET VALIDATED!"
+Comment1 ""
 Comment2 ""
 Comment3 ""
 Comment4 ""
