@@ -114,9 +114,9 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
  * driver - Host ALSA audio driver.
  * inmp621-breakout - INMP621 Microphone breakout. Designed to be optionally used with beaglemic-cape. **Work in progress.**
  * libs - Library code. Currently contains code to drive LED ring for beaglemic-cape.
- * pocket-cape - PocketBeagle cape to be used with spm0423hd4h-breakout.
  * pru - PRU firmware.
- * spm0423hd4h-breakout - SPM0432HD4H microphone breakout. Designed to be used with pocket-cape.
+ * deprecated/pocket-cape - PocketBeagle cape to be used with deprecated/spm0423hd4h-breakout.
+ * deprecated/spm0423hd4h-breakout - SPM0432HD4H microphone breakout. Designed to be used with pocket-cape.
 
 # Further Work
 A few ideas to improve the design:
