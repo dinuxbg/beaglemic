@@ -1,7 +1,7 @@
 /*
- * HC-SR04 remoteproc/rpmsg project based on TI's lab05 example.
+ * Audio RPMSG project based on TI's lab05 example.
  *
- * Copyright (C) 2015 Dimitar Dimitrov <dinuxbg@gmail.com>
+ * Copyright (C) 2015-2020 Dimitar Dimitrov <dinuxbg@gmail.com>
  * Copyright (C) 2015 Texas Instruments Incorporated - http://www.ti.com/
  *
  *
@@ -132,7 +132,7 @@ static void handle_host_interrupt(struct pru_rpmsg_transport *transport)
 /*
  * Get the next audio frame from peer PRU and store it
  * at buffer bufptr. The number of written bytes is:
- *    16 channels with * 2 bytes for each = 32 bytes
+ *    BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES
  *
  * Return the current frame counter value.
  */
@@ -140,14 +140,18 @@ static inline unsigned int acquire_frame_from_peer(void *bufptr)
 {
 	unsigned int fcntr;
 
+#if (BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES) != (8*4)
+  #error "Please update the clobber list below."
+#endif
 	asm volatile (
-		"xin	%[SCRATCH_BANK], r16, 16*2 + 4		\n\t"
-		"sbbo	r16, %[bufptr], 0, 16*2			\n\t"
+		"xin	%[SCRATCH_BANK], r16, %[NBYTES] + 4	\n\t"
+		"sbbo	r16, %[bufptr], 0, %[NBYTES]		\n\t"
 		/* Keep as the last instruction, [fcntr] does not
 		 * have the & constraint modifier. */
 		"mov	%[fcntr], r24				\n\t"
 		: [fcntr] "=r" (fcntr)
-		: [bufptr] "r" (bufptr), [SCRATCH_BANK] "i" (SCRATCH_BANK_2)
+		: [bufptr] "r" (bufptr), [SCRATCH_BANK] "i" (SCRATCH_BANK_2),
+		  [NBYTES] "i" (BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES)
 		: "memory", "r16", "r17", "r18", "r19",
 		  "r20", "r21", "r22", "r23", "r24");
 
@@ -166,7 +170,7 @@ static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 		return;
 
 	frame_counter = acquire_frame_from_peer((void *)(stream.dma_addr + stream.dma_i));
-	stream.dma_i += 16 * 2;
+	stream.dma_i += BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES;
 
 	if (stream.dma_i >= stream.dma_bytes)
 		stream.dma_i = 0;

@@ -92,7 +92,11 @@ static const struct snd_pcm_hardware beaglemic_pcm_hw = {
 		 SNDRV_PCM_INFO_INTERLEAVED |
 		 SNDRV_PCM_INFO_BLOCK_TRANSFER |
 		 SNDRV_PCM_INFO_SYNC_APPLPTR),
+#if BEAGLEMIC_PCM_SAMPLE_NBYTES == 2
 	.formats =          SNDRV_PCM_FMTBIT_S16_LE,
+#else
+  #error "PCM format not yet supported."
+#endif
 	.rates =            SNDRV_PCM_RATE_32000,
 	.rate_min =         BEAGLEMIC_PCM_SAMPLE_RATE,
 	.rate_max =         BEAGLEMIC_PCM_SAMPLE_RATE,
