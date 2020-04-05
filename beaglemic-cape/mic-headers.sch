@@ -6,8 +6,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 3
 Title "PDM Microphones"
-Date "2020-01-26"
-Rev "1.0-rc3"
+Date "2020-04-05"
+Rev "1.0-rc4"
 Comp "dimitar@dinux.eu"
 Comment1 "WARNING - NOT YET VALIDATED!"
 Comment2 ""

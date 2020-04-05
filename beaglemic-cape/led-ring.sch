@@ -6,8 +6,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
 Title "LED Ring"
-Date "2020-01-26"
-Rev "1.0-rc3"
+Date "2020-04-05"
+Rev "1.0-rc4"
 Comp "dimitar@dinux.eu"
 Comment1 "WARNING - NOT YET VALIDATED!"
 Comment2 ""
@@ -71,7 +71,7 @@ P 6950 4850
 AR Path="/5E16CB01" Ref="R?"  Part="1" 
 AR Path="/5E0F7674/5E16CB01" Ref="R12"  Part="1" 
 F 0 "R12" H 7020 4896 50  0000 L CNN
-F 1 "12k" H 7020 4805 50  0000 L CNN
+F 1 "12k**" H 7020 4805 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 6880 4850 50  0001 C CNN
 F 3 "~" H 6950 4850 50  0001 C CNN
 	1    6950 4850
@@ -1031,4 +1031,6 @@ Wire Wire Line
 Connection ~ 2050 5900
 Wire Wire Line
 	2050 5900 2050 5950
+Text Notes 5850 5450 0    100  Italic 0
+** Change to 0 Ohm\nif using AMS1117-3.3
 $EndSCHEMATC
