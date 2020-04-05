@@ -22,6 +22,12 @@ config-pin P2_24 pruout	# pru0_pru_r30_14
 # Spare (LED?)
 config-pin P2_33 pruout	# pru0_pru_r30_15
 
+# Indication LED strip (optional, controlled from Linux)
+config-pin P2_25 gpio   # DS
+config-pin P2_29 gpio   # SHCP
+config-pin P2_31 gpio   # STCP
+
+
 cp out/pru-core0.elf /lib/firmware/
 cp out/pru-core1.elf /lib/firmware/
 echo pru-core0.elf > $RPROC0/firmware
