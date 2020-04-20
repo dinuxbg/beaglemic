@@ -1,7 +1,7 @@
-# BeagleMic 16-channel PDM Audio Capture
+# BeagleMic 8-channel PDM Audio Capture
 
 # Introduction
-Ever wanted to record audio from 16 PDM microphones simultanously? Now you can with a BeagleMic running on a [PocketBeagle](https://beagleboard.org/pocket) or [BeagleBone AI](https://bbb.io/ai)
+Ever wanted to record audio from 8 PDM microphones simultanously? Now you can with a BeagleMic running on a [PocketBeagle](https://beagleboard.org/pocket) or [BeagleBone AI](https://bbb.io/ai)
 
 Yes, you could opt for the much simpler I2S microphones. But then you won't have fun writing assembly to capture and process sixteen digital signals at more than 2MHz sample rate.
 
@@ -9,9 +9,9 @@ Current firmware supports:
 
 | Feature                    | Support           |
 |----------------------------|-------------------|
-| PDM Bit Clock              | 2,273 MHz         |
-| PCM Output Bits Per Sample | 16 bps            |
-| PCM Output Sample Rate     | 35511 Samples/sec |
+| PDM Bit Clock              | 3,448 MHz         |
+| PCM Output Bits Per Sample | 24 bps            |
+| PCM Output Sample Rate     | 26939 Samples/sec |
 
 # Hardware
 The schematic is simple. PDM microphones' digital outputs are connected directly to the PRU input pins. The PRU also drives the bit clock. I have tested on PocketBeagle and BeagleBone AI.
@@ -19,14 +19,14 @@ The schematic is simple. PDM microphones' digital outputs are connected directly
 | PocketBeagle | BBAI  | PRU Pin | Type  | Signal               |
 |--------------|-------|---------|-------|----------------------|
 | P2.24        | P9.11 | R30_14  | Output| PDM Bit Clock        |
-| P1.36        | P8.44 | R31_0   | Input | MIC0 and MIC1 Data   |
-| P1.33        | P8.41 | R31_1   | Input | MIC2 and MIC3 Data   |
-| P2.32        | P8.42 | R31_2   | Input | MIC4 and MIC5 Data   |
-| P2.30        | P8.39 | R31_3   | Input | MIC6 and MIC7 Data   |
-| P1.31        | P8.40 | R31_4   | Input | MIC8 and MIC9 Data   |
-| P2.34        | P8.37 | R31_5   | Input | MIC10 and MIC11 Data |
-| P2.28        | P8.38 | R31_6   | Input | MIC12 and MIC13 Data |
-| P1.29        | P8.36 | R31_7   | Input | MIC14 and MIC15 Data |
+| P1.36        | P8.44 | R31_0   | Input | MIC0                 |
+| P1.33        | P8.41 | R31_1   | Input | MIC1                 |
+| P2.32        | P8.42 | R31_2   | Input | MIC2                 |
+| P2.30        | P8.39 | R31_3   | Input | MIC3                 |
+| P1.31        | P8.40 | R31_4   | Input | MIC4                 |
+| P2.34        | P8.37 | R31_5   | Input | MIC5                 |
+| P2.28        | P8.38 | R31_6   | Input | MIC6                 |
+| P1.29        | P8.36 | R31_7   | Input | MIC7                 |
 
 
 Optionally, high-level software may visualize detected audio direction using a stripe of 16 LEDs hooked to two 74HC595 shift registers:
@@ -37,8 +37,6 @@ Optionally, high-level software may visualize detected audio direction using a s
 | P2.29        | gpio1_7  | P9.28 | gpio4_17  | SHCP   |
 | P2.31        | gpio1_19 | P9.23 | gpio7_11  | STCP   |
 
-
-For each microphone pair, one microphone is configured to output data on the rising clock edge, and the other is configured to output data on the falling edge. This way we need only 8 input GPIOs to capture data from all 16 microphones.
 
 Microphone breakout board and a PocketBeagle Cape are provided in KiCad format.
 
@@ -72,7 +70,7 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
     sudo ./start.sh
 
     # Record audio
-    arecord  -r32000  -c16 -f S16_LE -t wav out.wav
+    arecord  -r26939  -c8 -f S32_LE -t wav out.wav
     # Hit Ctrl+C to stop.
 
 # Running The Example on BeagleBone AI
@@ -104,7 +102,7 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
     # Record audio. Use second audio card, since first one is
     # the onboard HDMI.
-    arecord  -D hw:1,0 -r32000  -c16 -f S16_LE -t wav out.wav
+    arecord  -D hw:1,0 -r26939  -c8 -f S32_LE -t wav out.wav
     # Hit Ctrl+C to stop.
 
 
@@ -121,7 +119,7 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 # Further Work
 A few ideas to improve the design:
 
- * If input is limited to 8 microphones, then process and output 24bit PCM data.
+ * Can the PRU subsystems in BBAI process 8 channels each, to combine for 16 microphone capture?
  * Move comb filters to PRU1, and try to add more integrators in PRU0.
  * Clean-up the cape PCB.
    * If possible, leave headers for Class-D output from spare PRUs.
@@ -131,6 +129,7 @@ A few ideas to improve the design:
  * [Another CIC Filter Article](http://www.tsdconseil.fr/log/scriptscilab/cic/cic-en.pdf)
  * [Series of PDM articles and software implementations](https://curiouser.cheshireeng.com/category/projects/pdm-microphone-toys/)
  * [Another CIC Filter Article](https://www.embedded.com/design/configurable-systems/4006446/Understanding-cascaded-integrator-comb-filters)
+ * [CIC Filter Introduction](http://home.mit.bme.hu/~kollar/papers/cic.pdf)
  * [Datasheet for the PDM microphones I've used](http://media.digikey.com/PDF/Data Sheets/Knowles Acoustics PDFs/SPM0423HD4H-WB.pdf)
  * [Inspiration for high-bandwidth data acquisition](https://github.com/ZeekHuge/BeagleScope)
 

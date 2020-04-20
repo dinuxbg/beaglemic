@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2011 Texas Instruments, Inc.
  * Copyright (C) 2011 Google, Inc.
- * Copyright (C) 2019 Dimitar Dimitrov <dimitar@dinux.eu>
+ * Copyright (C) 2019-2020 Dimitar Dimitrov <dimitar@dinux.eu>
  *
  * Ohad Ben-Cohen <ohad@wizery.com>
  * Brian Swetland <swetland@google.com>
@@ -94,10 +94,12 @@ static const struct snd_pcm_hardware beaglemic_pcm_hw = {
 		 SNDRV_PCM_INFO_SYNC_APPLPTR),
 #if BEAGLEMIC_PCM_SAMPLE_NBYTES == 2
 	.formats =          SNDRV_PCM_FMTBIT_S16_LE,
+#elif BEAGLEMIC_PCM_SAMPLE_NBYTES == 4
+	.formats =          SNDRV_PCM_FMTBIT_S32_LE,
 #else
   #error "PCM format not yet supported."
 #endif
-	.rates =            SNDRV_PCM_RATE_32000,
+	.rates =            SNDRV_PCM_RATE_CONTINUOUS,
 	.rate_min =         BEAGLEMIC_PCM_SAMPLE_RATE,
 	.rate_max =         BEAGLEMIC_PCM_SAMPLE_RATE,
 	.channels_min =     BEAGLEMIC_PCM_NCHANNELS,
