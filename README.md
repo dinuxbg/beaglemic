@@ -110,9 +110,9 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
 # Folder Structure
 
- * beaglemic-cape - Universal cape for BeagleBone AI, PocketBeagle and iCE40HX8K-EVB. **Work in progress.**
+ * beaglemic-cape - Universal cape for BeagleBone AI, PocketBeagle and iCE40HX8K-EVB.
  * driver - Host ALSA audio driver.
- * inmp621-breakout - INMP621 Microphone breakout. Designed to be optionally used with beaglemic-cape. **Work in progress.**
+ * inmp621-breakout - INMP621 Microphone breakout. Designed to be optionally used with beaglemic-cape.
  * libs - Library code. Currently contains code to drive LED ring for beaglemic-cape.
  * pru - PRU firmware.
  * deprecated/pocket-cape - PocketBeagle cape to be used with deprecated/spm0423hd4h-breakout.

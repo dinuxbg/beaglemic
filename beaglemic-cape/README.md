@@ -1,9 +1,13 @@
 # Beaglemic-Cape
 
 This is a KiCAD project for a 16 PDM Microphone board with host support for:
- * BeagleBone AI (**untested!**)
- * PocketBeagle (**untested!**)
+ * BeagleBone AI
+ * PocketBeagle
  * ICE40HX8K-EVB1 (**untested!**)
+
+PDM microphones can either be:
+ * Soldered on the cape board, which is not for beginners. You would require a steady hand or pick-and-place machine, and reflow soldering oven.
+ * Connected via regular headers using external [breakout](../inmp621-breakout/README.md) [board](https://www.adafruit.com/product/3492).
 
 # Future Improvements
 
