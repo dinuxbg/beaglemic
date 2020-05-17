@@ -178,7 +178,7 @@ main_loop:
 	/* ---------- CLK 0 --------------------------------------*/
 	mov	RPDATA, r31			/* 1 */
 	clr	r30, r30, R30_CLK_PIN		/* 1 */
-	handle_data8l				/* 32 = 4 * 8 */
+	handle_data8r				/* 32 = 4 * 8 */
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
@@ -203,7 +203,7 @@ main_loop:
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
-	handle_data8r				/* 32 = 4 * 8 */
+	handle_data8l				/* 32 = 4 * 8 */
 	jmp RJMPSUB				/* 1 jmp, 9 subroutine cycles*/
 
 
