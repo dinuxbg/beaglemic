@@ -1,0 +1,40 @@
+@startuml
+
+package "PRU0" {
+  [PDM Data Capture]
+  frame "CIC" {
+    [Integrator 1]
+    [Integrator 2]
+    [Rate Change]
+    [Comb 1]
+    [Comb 2]
+  }
+}
+
+package "PRU1" {
+  [PCM Sample]
+  [RPMSG Control]
+  [DRAM Buffer Write]
+}
+
+package "Linux Kernel Driver" {
+  [RPMSG]
+  [ALSA Frame Events]
+  [ALSA Audio Data]
+}
+
+[PDM Data Capture] --> [Integrator 1]
+[Integrator 1] --> [Integrator 2]
+[Integrator 2] --> [Rate Change]
+[Rate Change] --> [Comb 1]
+[Comb 1] --> [Comb 2]
+[Comb 2] --> [PCM Sample]
+[PCM Sample] --> [DRAM Buffer Write]
+[PCM Sample] --> [RPMSG Control]
+[RPMSG Control] --> [RPMSG]
+[RPMSG] --> [ALSA Frame Events]
+[DRAM Buffer Write] --> [ALSA Audio Data]
+
+
+@enduml
+
