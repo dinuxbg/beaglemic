@@ -47,7 +47,7 @@ CFLAGS0 += -mmcu=am335x.pru0 -nostdlib -nodefaultlibs -nostartfiles
 CFLAGS1 += -mmcu=am335x.pru1
 
 # List of source files to compile for each PRU core.
-SRC0 := main0.S
+SRC0 := main0.S pru0-16ch.S pru0-8ch.S
 SRC1 := main1.c pru_rpmsg.c pru_virtqueue.c
 
 # GCC's -MMD does not yield the needed C dependencies when compiling all

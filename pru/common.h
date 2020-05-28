@@ -21,6 +21,8 @@
 #define SCRATCH_BANK_2	12
 #define PEER_PRU_BANK	14
 
+#define REG_PRU0_MODE	r29.b0
+
 #define CMD_START	0x01
 #define CMD_STOP	0x02
 

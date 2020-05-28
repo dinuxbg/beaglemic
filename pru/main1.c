@@ -93,6 +93,16 @@ struct {
 
 static void prepare_stream(struct beaglemic_pru_prepare_rec *prep)
 {
+	/* Set the PRU0 acquisition mode. */
+	asm volatile (
+		"mov	r29.b0, %[nchannels]		\n\t"
+		"xout	%[SCRATCH_BANK], r29.b0, 1	\n\t"
+		:
+		: [nchannels] "r" (prep->channels),
+		  [SCRATCH_BANK] "i" (SCRATCH_BANK_2)
+		: "r29.b0");
+
+	/* Save stream settings. */
 	stream.dma_addr = prep->buffer_addr;
 	stream.dma_bytes = prep->buffer_nbytes;
 	stream.period_size = prep->period_size;
@@ -132,7 +142,7 @@ static void handle_host_interrupt(struct pru_rpmsg_transport *transport)
 /*
  * Get the next audio frame from peer PRU and store it
  * at buffer bufptr. The number of written bytes is:
- *    BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES
+ *    BEAGLEMIC_PCM_FRAME_SIZE
  *
  * Return the current frame counter value.
  */
@@ -140,7 +150,7 @@ static inline unsigned int acquire_frame_from_peer(void *bufptr)
 {
 	unsigned int fcntr;
 
-#if (BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES) != (8*4)
+#if BEAGLEMIC_PCM_FRAME_NBYTES != (8*4)
   #error "Please update the clobber list below."
 #endif
 	asm volatile (
@@ -151,7 +161,7 @@ static inline unsigned int acquire_frame_from_peer(void *bufptr)
 		"mov	%[fcntr], r24				\n\t"
 		: [fcntr] "=r" (fcntr)
 		: [bufptr] "r" (bufptr), [SCRATCH_BANK] "i" (SCRATCH_BANK_2),
-		  [NBYTES] "i" (BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES)
+		  [NBYTES] "i" (BEAGLEMIC_PCM_FRAME_NBYTES)
 		: "memory", "r16", "r17", "r18", "r19",
 		  "r20", "r21", "r22", "r23", "r24");
 
@@ -170,7 +180,7 @@ static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 		return;
 
 	frame_counter = acquire_frame_from_peer((void *)(stream.dma_addr + stream.dma_i));
-	stream.dma_i += BEAGLEMIC_PCM_NCHANNELS * BEAGLEMIC_PCM_SAMPLE_NBYTES;
+	stream.dma_i += BEAGLEMIC_PCM_FRAME_NBYTES;
 
 	if (stream.dma_i >= stream.dma_bytes)
 		stream.dma_i = 0;

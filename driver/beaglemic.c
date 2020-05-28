@@ -30,6 +30,7 @@
 #include <sound/core.h>
 #include <sound/control.h>
 #include <sound/pcm.h>
+#include <sound/pcm_params.h>
 #include <sound/initval.h>
 
 #include "beaglemic-rpc.h"
@@ -66,12 +67,6 @@ static int rpmsg_beaglemic_cb(struct rpmsg_device *rpdev, void *data, int len,
 		dev_err(&rpdev->dev, "unexpected receive length: %d\n", len);
 		return -EIO;
 	}
-#if 0
-	/* send a new message now */
-	ret = rpmsg_send(rpdev->ept, MSG, strlen(MSG));
-	if (ret)
-		dev_err(&rpdev->dev, "rpmsg_send failed: %d\n", ret);
-#endif
 
 	WRITE_ONCE(idata->hwptr, pru_status->hwptr);
 	dev_dbg(&rpdev->dev, "PRU reported total frame count: %u\n",
@@ -92,16 +87,12 @@ static const struct snd_pcm_hardware beaglemic_pcm_hw = {
 		 SNDRV_PCM_INFO_INTERLEAVED |
 		 SNDRV_PCM_INFO_BLOCK_TRANSFER |
 		 SNDRV_PCM_INFO_SYNC_APPLPTR),
-#if BEAGLEMIC_PCM_SAMPLE_NBYTES == 2
-	.formats =          SNDRV_PCM_FMTBIT_S16_LE,
-#else
-  #error "PCM format not yet supported."
-#endif
-	.rates =            SNDRV_PCM_RATE_32000,
-	.rate_min =         BEAGLEMIC_PCM_SAMPLE_RATE,
-	.rate_max =         BEAGLEMIC_PCM_SAMPLE_RATE,
-	.channels_min =     BEAGLEMIC_PCM_NCHANNELS,
-	.channels_max =     BEAGLEMIC_PCM_NCHANNELS,
+	.formats =          SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
+	.rates =            SNDRV_PCM_RATE_CONTINUOUS,
+	.rate_min =         16000,
+	.rate_max =         44100,
+	.channels_min =     8,
+	.channels_max =     16,
 	.buffer_bytes_max = 1024 * 1024,
 	.period_bytes_min = 1024,
 	.period_bytes_max = 512 * 1024,
@@ -109,15 +100,32 @@ static const struct snd_pcm_hardware beaglemic_pcm_hw = {
 	.periods_max =      1024,
 };
 
+static bool valid_16ch_mode(struct snd_pcm_hw_params *hwparams)
+{
+	return params_rate(hwparams) == BEAGLEMIC_PCM_16CH_SAMPLE_RATE
+		&& params_channels(hwparams) == 16
+		&& params_format(hwparams) == SNDRV_PCM_FORMAT_S16_LE;
+}
+
+static bool valid_8ch_mode(struct snd_pcm_hw_params *hwparams)
+{
+	return params_rate(hwparams) == BEAGLEMIC_PCM_8CH_SAMPLE_RATE
+		&& params_channels(hwparams) == 8
+		&& params_format(hwparams) == SNDRV_PCM_FORMAT_S32_LE;
+}
+
 static int beaglemic_pcm_hw_params(struct snd_pcm_substream *substream,
 			      struct snd_pcm_hw_params *hwparams)
 {
 	int err;
 
-	if (params_rate(hwparams) != BEAGLEMIC_PCM_SAMPLE_RATE) {
+	/* Validate bits-per-sample, sample rate and number of channels. */
+	if (!valid_8ch_mode(hwparams) && !valid_16ch_mode(hwparams)) {
 		dev_err(substream->pcm->card->dev,
-			"Invalid sampling rate:%d\n",
-			params_rate(hwparams));
+			"Invalid mode:%d/%dch/%s\n",
+			params_rate(hwparams),
+			params_channels(hwparams),
+			snd_pcm_format_name(params_format(hwparams)));
 		return -EINVAL;
 	}
 
@@ -164,7 +172,7 @@ static int beaglemic_capture_prepare(struct snd_pcm_substream *substream)
 	int ret;
 
 	dev_dbg(substream->pcm->card->dev, "Capture prepare: dma_addr=%pad\n",
-		runtime->dma_addr);
+		&runtime->dma_addr);
 	dev_dbg(substream->pcm->card->dev, "Capture prepare: dma_bytes=%zu\n",
 		runtime->dma_bytes);
 	dev_dbg(substream->pcm->card->dev, "Capture prepare: period_size=%zu\n",
@@ -175,7 +183,7 @@ static int beaglemic_capture_prepare(struct snd_pcm_substream *substream)
 	flush_work(&idata->trigger_work);
 
 	pru_prepare.cmd = BEAGLEMIC_PRUCMD_PREPARE;
-	pru_prepare.channels = BEAGLEMIC_PCM_NCHANNELS;
+	pru_prepare.channels = runtime->channels;
 	pru_prepare.buffer_addr = runtime->dma_addr;
 	pru_prepare.buffer_nbytes = runtime->dma_bytes;
 	pru_prepare.period_size = frames_to_bytes(runtime, runtime->period_size);

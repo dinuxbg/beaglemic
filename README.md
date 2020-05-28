@@ -1,5 +1,7 @@
 # BeagleMic 16-channel PDM Audio Capture
 
+![](images/cape.png)
+
 # Introduction
 Ever wanted to record audio from 16 PDM microphones simultanously? Now you can with a BeagleMic running on a [PocketBeagle](https://beagleboard.org/pocket) or [BeagleBone AI](https://bbb.io/ai)
 
@@ -7,11 +9,11 @@ Yes, you could opt for the much simpler I2S microphones. But then you won't have
 
 Current firmware supports:
 
-| Feature                    | Support           |
-|----------------------------|-------------------|
-| PDM Bit Clock              | 2,273 MHz         |
-| PCM Output Bits Per Sample | 16 bps            |
-| PCM Output Sample Rate     | 35511 Samples/sec |
+| Feature                    | 16 Channel Mode   | 8 Channel Mode    |
+|----------------------------|-------------------|-------------------|
+| PDM Bit Clock              | 2,273 MHz         | 3,448 MHz         |
+| PCM Output Bits Per Sample | 16 bps            | 24 bps            |
+| PCM Output Sample Rate     | 31888 Samples/sec | 26940 Samples/sec |
 
 # Hardware
 The schematic is simple. PDM microphones' digital outputs are connected directly to the PRU input pins. The PRU also drives the bit clock. I have tested on PocketBeagle and BeagleBone AI.
@@ -49,6 +51,8 @@ Unfortunately the breakout board is essential for a home DIY user like me, since
 
 PRU0 takes care of driving the PDM bit clock and capturing the microphone bit data. It then runs a CIC filter to convert PDM to PCM, and feeds PCM data to PRU1.
 
+PRU0 has two alternative modes of operation. For 16 channels it executes 2 integrator and 2 comb stages for CIC filtering. Whereas for 8 channels it does 3.
+
 PRU1 is retransmitting PCM data from PRU0 down to the ARM host. RPMSG is used for control commands. Shared DDRAM buffers are used for audio data.
 
 Host audio driver presents a standard ALSA audio card, so that arecord and other standard tools can be readily used.
@@ -74,7 +78,8 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
     sudo ./start.sh
 
     # Record audio
-    arecord  -r32000  -c16 -f S16_LE -t wav out.wav
+    arecord  -r31888  -c16 -f S16_LE -t wav out.wav
+    arecord  -r26940  -c8 -f S32_LE -t wav out.wav
     # Hit Ctrl+C to stop.
 
 # Running The Example on BeagleBone AI
@@ -106,7 +111,8 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
     # Record audio. Use second audio card, since first one is
     # the onboard HDMI.
-    arecord  -D hw:1,0 -r32000  -c16 -f S16_LE -t wav out.wav
+    arecord  -D hw:1,0 -r31888  -c16 -f S16_LE -t wav out.wav
+    arecord  -D hw:1,0 -r26940  -c8 -f S32_LE -t wav out.wav
     # Hit Ctrl+C to stop.
 
 
@@ -123,7 +129,6 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 # Further Work
 A few ideas to improve the design:
 
- * If input is limited to 8 microphones, then process and output 24bit PCM data.
  * Move comb filters to PRU1, and try to add more integrators in PRU0.
  * Clean-up the cape PCB.
    * If possible, leave headers for Class-D output from spare PRUs.
@@ -133,6 +138,7 @@ A few ideas to improve the design:
  * [Another CIC Filter Article](http://www.tsdconseil.fr/log/scriptscilab/cic/cic-en.pdf)
  * [Series of PDM articles and software implementations](https://curiouser.cheshireeng.com/category/projects/pdm-microphone-toys/)
  * [Another CIC Filter Article](https://www.embedded.com/design/configurable-systems/4006446/Understanding-cascaded-integrator-comb-filters)
+ * [CIC Filter Introduction](http://home.mit.bme.hu/~kollar/papers/cic.pdf)
  * [Datasheet for the PDM microphones I've used](http://media.digikey.com/PDF/Data Sheets/Knowles Acoustics PDFs/SPM0423HD4H-WB.pdf)
  * [Inspiration for high-bandwidth data acquisition](https://github.com/ZeekHuge/BeagleScope)
 
