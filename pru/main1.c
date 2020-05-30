@@ -218,6 +218,9 @@ static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 	/* Clear the event status */
 	CT_INTC.SICR_bit.STS_CLR_IDX = FROM_PEER;
 
+	if (!stream.initialized)
+		return;
+
 	if (!stream.dma_addr || !stream.dma_bytes || !stream.period_size)
 		return;
 
@@ -275,7 +278,7 @@ int main(void)
 		if (read_r31() & HOST_INT) {
 			handle_host_interrupt(&transport);
 		}
-		if (stream.initialized && (read_r31() & PEER_INT)) {
+		if (read_r31() & PEER_INT) {
 			handle_peer_interrupt(&transport);
 		}
 	}
