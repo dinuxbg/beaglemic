@@ -88,6 +88,7 @@ struct {
 	uint32_t dma_addr;
 	uint32_t dma_bytes;
 	uint32_t period_size;
+	uint32_t channels;
 	uint32_t dma_i;
 } stream;
 
@@ -106,6 +107,7 @@ static void prepare_stream(struct beaglemic_pru_prepare_rec *prep)
 	stream.dma_addr = prep->buffer_addr;
 	stream.dma_bytes = prep->buffer_nbytes;
 	stream.period_size = prep->period_size;
+	stream.channels = prep->channels;
 	stream.dma_i = 0;
 }
 
@@ -169,6 +171,46 @@ static inline unsigned int acquire_frame_from_peer(void *bufptr)
 
 }
 
+/*
+ * Fill in generated "triangular signal" data. Useful for debugging
+ * ALSA and DMA issues.
+ */
+static inline unsigned int generate_frame(void *bufptr)
+{
+	static uint32_t cntr;
+
+	unsigned i;
+	uint16_t *p16 = bufptr;
+	uint32_t *p32 = bufptr;
+	uint32_t val;
+
+	if (stream.channels == 8)
+		val = cntr << 12;
+	else
+		val = cntr;
+
+	for (i = 0; i < stream.channels; i++) {
+		if (stream.channels == 8)
+			*p32++ = val;
+		else
+			*p16++ = val;
+		val <<= 1;
+	}
+
+	return cntr++;
+}
+
+static inline unsigned int obtain_frame(void *bufptr)
+{
+	if (0) {
+		/* For debug purposes. */
+		return generate_frame(bufptr);
+	} else {
+		/* Real audio. */
+		return acquire_frame_from_peer(bufptr);
+	}
+}
+
 static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 {
 	unsigned int frame_counter;
@@ -179,7 +221,7 @@ static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 	if (!stream.dma_addr || !stream.dma_bytes || !stream.period_size)
 		return;
 
-	frame_counter = acquire_frame_from_peer((void *)(stream.dma_addr + stream.dma_i));
+	frame_counter = obtain_frame((void *)(stream.dma_addr + stream.dma_i));
 	stream.dma_i += BEAGLEMIC_PCM_FRAME_NBYTES;
 
 	if (stream.dma_i >= stream.dma_bytes)
