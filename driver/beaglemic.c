@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2011 Texas Instruments, Inc.
  * Copyright (C) 2011 Google, Inc.
- * Copyright (C) 2019 Dimitar Dimitrov <dimitar@dinux.eu>
+ * Copyright (C) 2019-2020 Dimitar Dimitrov <dimitar@dinux.eu>
  *
  * Ohad Ben-Cohen <ohad@wizery.com>
  * Brian Swetland <swetland@google.com>
@@ -274,7 +274,7 @@ static int beaglemic_pcm_create(struct instance_data *idata)
 		return err;
 
 	pcm->private_data = idata;
-	strcpy(pcm->name, "Beaglemic PCM");
+	strcpy(pcm->name, "BeagleMic PCM");
 
 	/* set operators */
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE,
@@ -337,8 +337,8 @@ static int rpmsg_beaglemic_probe(struct rpmsg_device *rpdev)
 
 	/* TODO - add controls via snd_ctl_add */
 
-	strcpy(idata->card->driver, "Beaglemic Audio Driver");
-	strcpy(idata->card->shortname, "Beaglemic Audio Card");
+	strcpy(idata->card->driver, "BeagleMic Audio Driver");
+	strcpy(idata->card->shortname, "BeagleMic");
 	sprintf(idata->card->longname, "%s 0x%x/0x%x",
 		idata->card->shortname,
 		rpdev->src, rpdev->dst);
@@ -376,6 +376,6 @@ static struct rpmsg_driver rpmsg_beaglemic_client = {
 };
 module_rpmsg_driver(rpmsg_beaglemic_client);
 
-MODULE_DESCRIPTION("Beaglemic audio card utilizing PRU");
+MODULE_DESCRIPTION("BeagleMic Audio Card Utilizing PRU");
 MODULE_AUTHOR("Dimitar Dimitrov <dimitar@dinux.eu>");
 MODULE_LICENSE("GPL v2");

@@ -111,8 +111,8 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
 
     # Record audio. Use second audio card, since first one is
     # the onboard HDMI.
-    arecord  -D hw:1,0 -r31888  -c16 -f S16_LE -t wav out.wav
-    arecord  -D hw:1,0 -r26940  -c8 -f S32_LE -t wav out.wav
+    arecord -D hw:CARD=BeagleMic -r31888  -c16 -f S16_LE -t wav out.wav
+    arecord -D hw:CARD=BeagleMic -r26940  -c8 -f S32_LE -t wav out.wav
     # Hit Ctrl+C to stop.
 
 
