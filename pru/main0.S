@@ -16,6 +16,9 @@
 
 #include "common.h"
 
+#define MIC_SLEEP_TIMEOUT_MS	10
+#define PRU_CYCLE_NS		((1000 * 1000 * 1000) / (200 * 1000 * 1000))
+
 	.extern _start_16ch
 	.extern _start_8ch
 
@@ -23,6 +26,26 @@
 	.section .init0, "x"
 	.global	_start
 _start:
+	/*
+	 * Appears that INMP621 cannot handle PDM clock frequency changes
+	 * on the fly. Occasionally the microphone enters a state with
+	 * substantially increased audio noise in its output when
+	 * changing between 16 and 8 channel audio. Remember that the
+	 * different modes also have different PDM clock frequencies.
+	 *
+	 * Solution found via trial and error is to reset the microphone
+	 * by going through its SLEEP state.
+	 *
+	 * INMP621 has typical timeout of 30us for entering SLEEP mode,
+	 * and SPM0423HD4H - 10ms.
+	 */
+	clr	r30, r30, R30_CLK_PIN
+
+	ldi32	r0, (MIC_SLEEP_TIMEOUT_MS * 1000 * 1000) / (PRU_CYCLE_NS * 2)
+wait_mic_sleep:
+	sub	r0, r0, 1
+	qbne	wait_mic_sleep, r0, 0
+
 	/* Ensure filters start initialized. */
 	zero	r0, 29 * 4
 	xout    SCRATCH_BANK_0, r0, 29 * 4

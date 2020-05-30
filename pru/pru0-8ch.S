@@ -74,12 +74,6 @@
 #define RFRCNT	r24		/* Frame counter. Conveniently placed
 				   immediately after PCM output regs. */
 
-#define INTC_COMPOSITE_SYS_BASE	16
-#define PRU0_TO_PRU1_INTR	(21 - INTC_COMPOSITE_SYS_BASE)
-#define R31_INTR_STROBE		(1u << 5)
-
-#define R30_CLK_PIN		14
-
 .altmacro
 
 /* Total: 5 cycles */
