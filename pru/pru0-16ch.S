@@ -216,6 +216,13 @@ main_loop:
  * We use them to run the comb filters.
  */
 subroutine_dispatch_table_start:
+	/* 31 idle (nop) stages */
+	.set i,0
+	.rept 31
+	   idle_subroutine
+	   .set i,i+1
+	.endr
+
 	/*
 	 * 16 microphones, with 2 comb stages each, totalling
 	 * 32 subroutine stages.
@@ -223,12 +230,6 @@ subroutine_dispatch_table_start:
 	.set i,0
 	.rept 16
 	   comb_subroutines	%i
-	   .set i,i+1
-	.endr
-	/* 31 idle (nop) stages */
-	.set i,0
-	.rept 31
-	   idle_subroutine
 	   .set i,i+1
 	.endr
 
