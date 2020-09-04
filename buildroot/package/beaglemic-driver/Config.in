@@ -1,0 +1,7 @@
+config BR2_PACKAGE_BEAGLEMIC_DRIVER
+	bool "beaglemic-driver"
+	depends on BR2_LINUX_KERNEL
+	help
+	  BeagleMic kernel audio driver.
+
+	  https://gitlab.com/dinuxbg/beaglemic/

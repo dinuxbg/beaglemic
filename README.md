@@ -133,6 +133,32 @@ A few ideas to improve the design:
  * Clean-up the cape PCB.
    * If possible, leave headers for Class-D output from spare PRUs.
 
+# Buildroot Image With USB UAC2 Gadget Mode
+The above installation and build instruction steps can be daunting. A [buildroot](https://buildroot.org) configuration for PocketBeagle is available to automate them, and add a bit more.
+
+The buildroot image is small (about 6MB). It initializes the BeagleMic audio driver, and links it to the UAC2 USB Gadget driver. Your BeagleMic PocketBeagle is presented as USB multichannel microphone, so that a regular PC can capture and run desired audio algorithms.
+
+You need to download the beaglemic and buildroot.org GIT trees in separate directories. Then, when building from the buildroot directory you need to provide the beaglemic path via BR2_EXTERNAL environment variable. Example commands:
+
+	git clone --depth=1 git://git.busybox.net/buildroot
+	git clone --depth=1 https://gitlab.com/dinuxbg/beaglemic
+
+	cd buildroot
+	export BR2_EXTERNAL=`realpath ../buildroot/`
+	make beaglemic_pb_defconfig
+	make -j`nproc`
+
+Above should result in a small SDCard image which you can flash. Be sure to get the /dev/sdX right for your SD/MMC card reader.
+
+	sudo dd if=output/images/sdcard.img of=/dev/sdX
+
+When PocketBeagle boots and you connect it via USB to your host, you should be able to record:
+
+	arecord -D hw:CARD=BeagleMic -c8 -t wav -f S32_LE -r24000 out-8ch.wav
+
+## Audio Mode Configuration
+Right now UAC2 Gadget is configured only for 8ch/32bps/24000kHz. With a few manual tweaks in buildroot/package/beaglemic-firmware/beaglemicd it can be switched to 16ch/16bps mode. I'm currently researching how I can make this configuration run-time, and how I can control the LED ring via USB.
+
 # References
  * [CIC Filter Introduction](https://dspguru.com/dsp/tutorials/cic-filter-introduction/)
  * [Another CIC Filter Article](http://www.tsdconseil.fr/log/scriptscilab/cic/cic-en.pdf)

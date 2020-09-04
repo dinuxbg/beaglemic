@@ -1,0 +1,9 @@
+bootpart=0:1
+devtype=mmc
+bootdir=
+bootfile=zImage
+console=ttyS0,115200n8
+loadaddr=0x82000000
+fdtaddr=0x88000000
+set_bootargs=setenv bootargs console=${console} quiet
+uenvcmd=run set_bootargs;run loadimage;run loadfdt;printenv bootargs;bootz ${loadaddr} - ${fdtaddr}

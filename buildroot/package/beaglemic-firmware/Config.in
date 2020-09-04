@@ -1,0 +1,8 @@
+config BR2_PACKAGE_BEAGLEMIC_FIRMWARE
+	bool "beaglemic-firmware"
+	help
+	  BeagleMic firmware for the PRU cores.
+
+	  WARNING: Requires host to have pru-gcc toolchain installed!
+
+	  https://gitlab.com/dinuxbg/beaglemic/

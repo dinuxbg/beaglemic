@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+RPROC0=/sys/class/remoteproc/remoteproc1
+RPROC1=/sys/class/remoteproc/remoteproc2
+
+DESC="beaglemicd"
+NAME=beaglemicd
+DAEMON=/usr/sbin/$NAME
+
+case "$1" in
+  start)
+	printf "Starting $DESC: "
+	start-stop-daemon -S -b -x $NAME
+	echo "OK"
+	;;
+  stop)
+	printf "Stopping $DESC: "
+	echo stop > $RPROC0/state
+	echo stop > $RPROC1/state
+	start-stop-daemon -K -x $NAME
+	echo "OK"
+	;;
+  restart|force-reload)
+	echo "Restarting $DESC: "
+	$0 stop
+	sleep 1
+	$0 start
+	echo ""
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

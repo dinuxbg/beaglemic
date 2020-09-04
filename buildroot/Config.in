@@ -1,0 +1,2 @@
+source "$BR2_EXTERNAL_BEAGLEMIC_PATH/package/beaglemic-driver/Config.in"
+source "$BR2_EXTERNAL_BEAGLEMIC_PATH/package/beaglemic-firmware/Config.in"

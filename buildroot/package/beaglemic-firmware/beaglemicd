@@ -1,0 +1,111 @@
+#!/bin/sh
+
+RPROC0=/sys/class/remoteproc/remoteproc1
+RPROC1=/sys/class/remoteproc/remoteproc2
+
+config_pin()
+{
+  echo -n $2 > /sys/bus/platform/drivers/bone-pinmux-helper/ocp:${1}_pinmux/state
+}
+
+# Unfortunately USB gadget audio gets broken with non-standard sample rates.
+# Hence we need to resample to a standard rate.
+#
+# TODO - can PRU resample? Can PRU firmware output sane rate in the first place??
+# How much "wiggle" room do we have if we declare 24000 but output something else?
+# How much clock skew can USB Audio tolerate?
+sox_convert_8ch_to_usb()
+{
+  sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw -
+}
+
+############  Setup pin control for PocketBeagle
+# Data
+config_pin P1_36 pruin  # pru0_pru_r31_0
+config_pin P1_33 pruin  # pru0_pru_r31_1
+config_pin P2_32 pruin  # pru0_pru_r31_2
+config_pin P2_30 pruin  # pru0_pru_r31_3
+config_pin P1_31 pruin  # pru0_pru_r31_4
+config_pin P2_34 pruin  # pru0_pru_r31_5
+config_pin P2_28 pruin  # pru0_pru_r31_6
+config_pin P1_29 pruin  # pru0_pru_r31_7
+
+# Bit clock
+config_pin P2_24 pruout # pru0_pru_r30_14
+
+# Indication LED strip (optional, controlled from Linux)
+config_pin P2_25 gpio   # DS
+config_pin P2_29 gpio   # SHCP
+config_pin P2_31 gpio   # STCP
+
+#  idVendor           0x1d6b Linux Foundation
+#  idProduct          0x0104 Multifunction Composite Gadget
+#  bcdDevice            4.04
+#  bcdUSB               2.00
+
+usb_idVendor="0x1d6b"
+usb_idProduct="0x0104"
+usb_bcdDevice="0x0404"
+usb_bcdUSB="0x0200"
+
+# TODO - get from EEPROM?
+usb_iserialnumber=50F1A
+usb_imanufacturer="dinux.eu"
+usb_iproduct="BeagleMic"
+
+echo pru-core0.elf > $RPROC0/firmware
+echo pru-core1.elf > $RPROC1/firmware
+
+echo start > $RPROC0/state
+echo start > $RPROC1/state
+
+# Init USB Audio Gadget
+# modprobe libcomposite # included in beaglemic_pd_defconfig
+# modprobe g_multi # included in beaglemic_pd_defconfig
+modprobe beaglemic
+
+# TODO - why configfs is not auto mounted?
+mount -t configfs none /sys/kernel/config/
+
+mkdir -p /sys/kernel/config/usb_gadget/g_multi || true
+cd /sys/kernel/config/usb_gadget/g_multi
+
+echo ${usb_bcdUSB} > bcdUSB
+echo ${usb_idVendor} > idVendor # Linux Foundation
+echo ${usb_idProduct} > idProduct # Multifunction Composite Gadget
+echo ${usb_bcdDevice} > bcdDevice
+
+mkdir -p strings/0x409
+
+echo ${usb_iserialnumber} > strings/0x409/serialnumber
+echo ${usb_imanufacturer} > strings/0x409/manufacturer
+echo ${usb_iproduct} > strings/0x409/product
+
+
+mkdir -p functions/uac2.usb0
+#echo 65535 > functions/uac2.usb0/p_chmask
+#echo 31888 > functions/uac2.usb0/p_srate
+#echo 2 > functions/uac2.usb0/p_ssize
+echo 255 > functions/uac2.usb0/p_chmask
+echo 24000 > functions/uac2.usb0/p_srate
+echo 4 > functions/uac2.usb0/p_ssize
+
+mkdir -p configs/c.1/strings/0x409
+echo "BeagleMic USB Audio Card" > configs/c.1/strings/0x409/configuration
+echo 500 > configs/c.1/MaxPower
+
+ln -s functions/uac2.usb0 configs/c.1/
+
+echo musb-hdrc.0 > UDC
+
+
+# Daemon mode
+while true
+do
+  # arecord -D hw:CARD=BeagleMic -r31888  -c16 -f S16_LE -t raw | aplay -D hw:CARD=UAC2Gadget -t raw -c16 -f S16_LE -r32000
+  arecord -D hw:CARD=BeagleMic -r26940  -c8 -f S32_LE -t raw | \
+	  sox_convert_8ch_to_usb | \
+	  aplay -D plughw:CARD=UAC2Gadget -t raw -c8 -f S32_LE -r24000
+
+  sleep 1
+done
