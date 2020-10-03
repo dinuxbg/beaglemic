@@ -14,9 +14,19 @@ config_pin()
 # TODO - can PRU resample? Can PRU firmware output sane rate in the first place??
 # How much "wiggle" room do we have if we declare 24000 but output something else?
 # How much clock skew can USB Audio tolerate?
+#
+# TODO - why do I get DC component and rather low volume from CIC output?
 sox_convert_8ch_to_usb()
 {
-  sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw -
+  # - Average large periods (2 seconds attack and decay) to achieve smoother
+  #   transitions.
+  # - Keep delay less than attack/decay time.
+  # - Anything below -180dB mark as silence (-900dB)
+  # - INMP621 for some reason requires large gain: -180dB transform to -30dB.
+  # - For -1dB do not gain at all.
+  local compand_filter="compand 2,2 6:-180,-900,-180,-30,-1,-1 0 -90 1"
+
+  sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw - highpass 20 ${compand_filter}
 }
 
 ############  Setup pin control for PocketBeagle
@@ -98,6 +108,8 @@ ln -s functions/uac2.usb0 configs/c.1/
 
 echo musb-hdrc.0 > UDC
 
+# Bump priority since we're dealing with Audio
+renice -n -19 $$
 
 # Daemon mode
 while true
