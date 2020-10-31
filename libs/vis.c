@@ -1,4 +1,10 @@
 /*
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2020 Dimitar Dimitrov <dimitar@dinux.eu>
+ */
+
+/*
  * sudo apt install libgpiod-dev
  */
 #include <stdio.h>

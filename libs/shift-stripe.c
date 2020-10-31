@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2020 Dimitar Dimitrov <dimitar@dinux.eu>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

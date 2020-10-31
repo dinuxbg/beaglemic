@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2020 Dimitar Dimitrov <dimitar@dinux.eu>
+ */
+
 struct shiftctx;
 struct shiftctx *shift_init(const char *requester,
 			    const char *ds_chip, int ds_line,

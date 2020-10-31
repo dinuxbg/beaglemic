@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# SPDX-License-Identifier: GPL-2.0
+
+
 RPROC0=/sys/class/remoteproc/remoteproc1
 RPROC1=/sys/class/remoteproc/remoteproc2
 
