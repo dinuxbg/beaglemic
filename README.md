@@ -128,8 +128,6 @@ Host audio driver presents a standard ALSA audio card, so that arecord and other
  * inmp621-breakout - INMP621 Microphone breakout. Designed to be optionally used with beaglemic-cape.
  * libs - Library code. Currently contains code to drive LED ring for beaglemic-cape.
  * pru - PRU firmware.
- * deprecated/pocket-cape - PocketBeagle cape to be used with deprecated/spm0423hd4h-breakout.
- * deprecated/spm0423hd4h-breakout - SPM0432HD4H microphone breakout. Designed to be used with pocket-cape.
 
 # Further Work
 A few ideas to improve the design:
@@ -170,7 +168,8 @@ Right now UAC2 Gadget is configured only for 8ch/32bps/24000kHz. With a few manu
  * [Series of PDM articles and software implementations](https://curiouser.cheshireeng.com/category/projects/pdm-microphone-toys/)
  * [Another CIC Filter Article](https://www.embedded.com/design/configurable-systems/4006446/Understanding-cascaded-integrator-comb-filters)
  * [CIC Filter Introduction](http://home.mit.bme.hu/~kollar/papers/cic.pdf)
- * [Datasheet for the PDM microphones I've used](http://media.digikey.com/PDF/Data Sheets/Knowles Acoustics PDFs/SPM0423HD4H-WB.pdf)
+ * [SPM0423HD4H Datasheet](http://media.digikey.com/PDF/Data Sheets/Knowles Acoustics PDFs/SPM0423HD4H-WB.pdf)
+ * [INMP621 Datasheet](https://invensense.tdk.com/download-pdf/inmp621-datasheet/)
  * [Inspiration for high-bandwidth data acquisition](https://github.com/ZeekHuge/BeagleScope)
 
 # Other Resources
