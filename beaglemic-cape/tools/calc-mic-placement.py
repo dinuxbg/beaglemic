@@ -25,5 +25,11 @@ def main():
         print("mic%02d: rot %f: %f x %f" % (i, -a_deg, p.real, p.imag))
         print("PHM%02d: rot %f: %f x %f" % (i, -a_deg + 11.125, p.real, p.imag))
 
+        # For ODAS configuration we don't need to handle CENTER
+        r,a = z2polar(R / 1000) # In meters
+        a = i * 2 * pi / 16
+        p = polar2z(r,a)
+        print("odas: mic%02d: %f, %f, %f" % (i, -p.real, p.imag, 0))
+
 if __name__ == "__main__":
     main()
