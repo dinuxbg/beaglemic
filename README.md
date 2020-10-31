@@ -15,6 +15,11 @@ Current firmware supports:
 | PCM Output Bits Per Sample | 16 bps            | 24 bps            |
 | PCM Output Sample Rate     | 31888 Samples/sec | 26940 Samples/sec |
 
+# Freedom
+To the best of my knowledge, the entire HW design is Open Hardware and designed with the libre KiCad software. The entire firmware stack is free software, and is built by free toolchains.
+
+Please report any closed components you notice.
+
 # Hardware
 The schematic is simple. PDM microphones' digital outputs are connected directly to the PRU input pins. The PRU also drives the bit clock. I have tested on PocketBeagle and BeagleBone AI.
 
