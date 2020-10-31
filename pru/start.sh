@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# SPDX-License-Identifier: BSD-2-Clause
+
 RPROC0=/sys/class/remoteproc/remoteproc1
 RPROC1=/sys/class/remoteproc/remoteproc2
 
