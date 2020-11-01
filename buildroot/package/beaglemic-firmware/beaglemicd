@@ -27,7 +27,7 @@ sox_convert_8ch_to_usb()
   # - Anything below -180dB mark as silence (-900dB)
   # - INMP621 for some reason requires large gain: -180dB transform to -30dB.
   # - For -1dB do not gain at all.
-  local compand_filter="compand 2,2 6:-180,-900,-180,-30,-1,-1 0 -90 1"
+  local compand_filter="compand 2,2 6:-180,-900,-180,-40,-1,-1 -3 -90 1"
 
   sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw - highpass 20 ${compand_filter}
 }
