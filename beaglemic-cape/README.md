@@ -1,5 +1,7 @@
 # Beaglemic-Cape
 
+![OSHW](OSHW_mark_BG000075.png)
+
 This is a KiCAD project for a 16 PDM Microphone board with host support for:
  * BeagleBone AI
  * PocketBeagle
