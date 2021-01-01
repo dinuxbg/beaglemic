@@ -21,15 +21,9 @@ config_pin()
 # TODO - why do I get DC component and rather low volume from CIC output?
 sox_convert_8ch_to_usb()
 {
-  # - Average large periods (2 seconds attack and decay) to achieve smoother
-  #   transitions.
-  # - Keep delay less than attack/decay time.
-  # - Anything below -180dB mark as silence (-900dB)
-  # - INMP621 for some reason requires large gain: -180dB transform to -30dB.
-  # - For -1dB do not gain at all.
-  local compand_filter="compand 2,2 6:-180,-900,-180,-40,-1,-1 -3 -90 1"
-
-  sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw - highpass 20 ${compand_filter}
+  # INMP621 for some reason requires large gain. With 70dB I do not get
+  # any saturation even with loud voice near the microphones.
+  sox --no-show-progress  -b 32 -c 8 -e signed-integer -r 26940 -t raw - -b 32 -c 8 -e signed-integer -r 24000 -t raw - highpass 20 gain 70
 }
 
 ############  Setup pin control for PocketBeagle
