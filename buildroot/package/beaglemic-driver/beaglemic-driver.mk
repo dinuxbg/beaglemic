@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-BEAGLEMIC_DRIVER_VERSION = 8f9b664010dccc8700b58501971b6b3963fd7897
+BEAGLEMIC_DRIVER_VERSION = 345158badc8e561a63a8b6431548ac5ed5002b24
 BEAGLEMIC_DRIVER_SITE = git://github.com/dinuxbg/beaglemic
 BEAGLEMIC_DRIVER_LICENSE = GPL-2.0
 BEAGLEMIC_DRIVER_LICENSE_FILES = COPYING
