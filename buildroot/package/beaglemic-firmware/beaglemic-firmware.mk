@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-BEAGLEMIC_FIRMWARE_VERSION = 8f9b664010dccc8700b58501971b6b3963fd7897
+BEAGLEMIC_FIRMWARE_VERSION = 345158badc8e561a63a8b6431548ac5ed5002b24
 BEAGLEMIC_FIRMWARE_SITE = git://github.com/dinuxbg/beaglemic
 BEAGLEMIC_FIRMWARE_LICENSE = TCL
 BEAGLEMIC_FIRMWARE_LICENSE_FILES = COPYING
