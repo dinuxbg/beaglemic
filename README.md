@@ -7,6 +7,8 @@ Ever wanted to record audio from 16 PDM microphones simultanously? Now you can w
 
 Yes, you could opt for the much simpler I2S microphones. But then you won't have fun writing assembly to capture and process sixteen digital signals at more than 2MHz sample rate.
 
+Audio can be routed to BeagleBone's USB gadget driver. Multichannel audio data can be recorded from a regular PC just as you would record from any other USB microphone. See the section about Buildroot image below.
+
 Current firmware supports:
 
 | Feature                    | 16 Channel Mode   | 8 Channel Mode    |
