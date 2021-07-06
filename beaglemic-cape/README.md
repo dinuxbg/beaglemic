@@ -18,6 +18,8 @@ A few ideas for improvements in an eventual future PCB revision:
  * Move the USB OTG connector to the outer edge, so that cable does not interfere with PocketBeagle.
  * Add a few extra LEDs for power and other status.
  * Add better package placement indicators on silkscreen (e.g. first pin, IC dent).
+ * Remove the BBAI connector. I couldn't find a way to utilize the proprietary DSPs, so let's focus on USB microphone with PocketBeagle.
+ * Switch to bottom-facing LEDs so that all SMD parts are on one of the PCB sides.
 
 # References
  * Microphone footprint, 3D model and schematics symbol are taken from https://www.snapeda.com/parts/INMP621/InvenSense/view-part/?ref=digikey . Footprint has minor modification to "break" the ground track and ease the data wires routing.
