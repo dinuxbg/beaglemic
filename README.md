@@ -149,7 +149,7 @@ You need to download the beaglemic and buildroot.org GIT trees in separate direc
 	git clone --depth=1 https://gitlab.com/dinuxbg/beaglemic
 
 	cd buildroot
-	export BR2_EXTERNAL=`realpath ../buildroot/`
+	export BR2_EXTERNAL=`realpath ../beaglemic/buildroot/`
 	make beaglemic_pb_defconfig
 	make -j`nproc`
 
