@@ -139,11 +139,7 @@ int16_t pru_virtqueue_kick(
 
 	/* Generate a system event to kick the ARM */
 	r31 = (INT_ENABLE | (vq->to_arm_event - INT_OFFSET)); 
-#ifdef __GNUC__
-	write_r31(r31);
-#else
 	__R31 = r31;
-#endif
 
 	return PRU_VIRTQUEUE_SUCCESS;
 }

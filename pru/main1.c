@@ -275,10 +275,10 @@ int main(void)
 	while (1) {
 		/* Check bit 31 of register R31 to see
 		 * if the mailbox interrupt has occurred */
-		if (read_r31() & HOST_INT) {
+		if (__R31 & HOST_INT) {
 			handle_host_interrupt(&transport);
 		}
-		if (read_r31() & PEER_INT) {
+		if (__R31 & PEER_INT) {
 			handle_peer_interrupt(&transport);
 		}
 	}
