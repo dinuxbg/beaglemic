@@ -131,15 +131,12 @@ int16_t pru_virtqueue_kick(
     struct pru_virtqueue	*vq
 )
 {
-	unsigned int r31;
-
 	/* If requested, do not kick the ARM host */
 	if (vq->vring.avail->flags & VRING_AVAIL_F_NO_INTERRUPT)
 		return PRU_VIRTQUEUE_NO_KICK;
 
 	/* Generate a system event to kick the ARM */
-	r31 = (INT_ENABLE | (vq->to_arm_event - INT_OFFSET)); 
-	__R31 = r31;
+	__R31 = (INT_ENABLE | (vq->to_arm_event - INT_OFFSET)); 
 
 	return PRU_VIRTQUEUE_SUCCESS;
 }
