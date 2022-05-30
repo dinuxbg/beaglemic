@@ -4,8 +4,9 @@
 #
 ################################################################################
 
-BEAGLEMIC_FIRMWARE_VERSION = b653bd6598299ca14f99ada122d2f6e7592f6714
-BEAGLEMIC_FIRMWARE_SITE = git://github.com/dinuxbg/beaglemic
+BEAGLEMIC_FIRMWARE_VERSION = 64c8d7751f0ffcb4d7d9fc0dd7cb8854f67be743
+BEAGLEMIC_FIRMWARE_SOURCE = $(BEAGLEMIC_DRIVER_VERSION).tar.gz
+BEAGLEMIC_FIRMWARE_SITE = https://github.com/dinuxbg/beaglemic/archive
 BEAGLEMIC_FIRMWARE_LICENSE = TCL
 BEAGLEMIC_FIRMWARE_LICENSE_FILES = COPYING
 

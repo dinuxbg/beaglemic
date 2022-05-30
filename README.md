@@ -137,6 +137,7 @@ A few ideas to improve the design:
  * Move comb filters to PRU1, and try to add more integrators in PRU0.
  * Clean-up the cape PCB.
    * If possible, leave headers for Class-D output from spare PRUs.
+ * Migrate to latest kernel 5.10.
 
 # Buildroot Image With USB UAC2 Gadget Mode
 The above installation and build instruction steps can be daunting. A [buildroot](https://buildroot.org) configuration for PocketBeagle is available to automate them, and add a bit more.
@@ -149,6 +150,7 @@ You need to download the beaglemic and buildroot.org GIT trees in separate direc
 	git clone --depth=1 https://gitlab.com/dinuxbg/beaglemic
 
 	cd buildroot
+	git checkout 2021.05.3  # Last BR release with kernel 4.19
 	export BR2_EXTERNAL=`realpath ../beaglemic/buildroot/`
 	make beaglemic_pb_defconfig
 	make -j`nproc`
