@@ -172,7 +172,7 @@ Right now UAC2 Gadget is configured only for 8ch/32bps/24000kHz. With a few manu
  * [Series of PDM articles and software implementations](https://curiouser.cheshireeng.com/category/projects/pdm-microphone-toys/)
  * [Another CIC Filter Article](https://www.embedded.com/design/configurable-systems/4006446/Understanding-cascaded-integrator-comb-filters)
  * [CIC Filter Introduction](http://home.mit.bme.hu/~kollar/papers/cic.pdf)
- * [SPM0423HD4H Datasheet](http://media.digikey.com/PDF/Data Sheets/Knowles Acoustics PDFs/SPM0423HD4H-WB.pdf)
+ * [SPM0423HD4H Datasheet](http://media.digikey.com/PDF/Data%20Sheets/Knowles%20Acoustics%20PDFs/SPM0423HD4H-WB.pdf)
  * [INMP621 Datasheet](https://invensense.tdk.com/download-pdf/inmp621-datasheet/)
  * [Inspiration for high-bandwidth data acquisition](https://github.com/ZeekHuge/BeagleScope)
 
