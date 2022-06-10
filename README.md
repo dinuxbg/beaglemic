@@ -1,6 +1,6 @@
 # BeagleMic 16-channel PDM Audio Capture
 
-![](images/cape.png)
+![](images/cape.jpg)
 
 # Introduction
 Ever wanted to record audio from 16 PDM microphones simultanously? Now you can with a BeagleMic running on a [PocketBeagle](https://beagleboard.org/pocket) or [BeagleBone AI](https://bbb.io/ai)
