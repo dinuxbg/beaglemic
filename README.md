@@ -25,18 +25,22 @@ Please report any closed components you notice.
 # Hardware
 The schematic is simple. PDM microphones' digital outputs are connected directly to the PRU input pins. The PRU also drives the bit clock. I have tested on PocketBeagle and BeagleBone AI.
 
-| PocketBeagle | BBAI  | PRU Pin | Type  | Signal               |
-|--------------|-------|---------|-------|----------------------|
-| P2.24        | P9.11 | R30_14  | Output| PDM Bit Clock        |
-| P1.36        | P8.44 | R31_0   | Input | MIC0 and MIC1 Data   |
-| P1.33        | P8.41 | R31_1   | Input | MIC2 and MIC3 Data   |
-| P2.32        | P8.42 | R31_2   | Input | MIC4 and MIC5 Data   |
-| P2.30        | P8.39 | R31_3   | Input | MIC6 and MIC7 Data   |
-| P1.31        | P8.40 | R31_4   | Input | MIC8 and MIC9 Data   |
-| P2.34        | P8.37 | R31_5   | Input | MIC10 and MIC11 Data |
-| P2.28        | P8.38 | R31_6   | Input | MIC12 and MIC13 Data |
-| P1.29        | P8.36 | R31_7   | Input | MIC14 and MIC15 Data |
+| PocketBeagle |  BBB  | BBAI  | PRU Pin | Type  | Signal               |
+|--------------|-------|-------|---------|-------|----------------------|
+| P2.24        | P8.12 | P9.11 | R30_14  | Output| PDM Bit Clock        |
+| P1.36        | P9.31 | P8.44 | R31_0   | Input | MIC0 and MIC1 Data   |
+| P1.33        | P9.29 | P8.41 | R31_1   | Input | MIC2 and MIC3 Data   |
+| P2.32        | P9.30 | P8.42 | R31_2   | Input | MIC4 and MIC5 Data   |
+| P2.30        | P9.28 | P8.39 | R31_3   | Input | MIC6 and MIC7 Data   |
+| P1.31        | P9.42 | P8.40 | R31_4   | Input | MIC8 and MIC9 Data   |
+| P2.34        | P9.27 | P8.37 | R31_5   | Input | MIC10 and MIC11 Data |
+| P2.28        | P9.41 | P8.38 | R31_6   | Input | MIC12 and MIC13 Data |
+| P1.29        | P9.25 | P8.36 | R31_7   | Input | MIC14 and MIC15 Data |
 
+CHANGES REQUIRED FOR BBB ONLY:
+ - For BBB, set GPIO1_27 to low, in order to diable the Y4 oscillator.
+ - For BBB, Remove R50 and stuff R51 (or disable GPIO0_7, and set pru0_pru_r31_4 mode for GPIO3_18).
+ - For BBB, Remove R19 and stuff R20 (or disable GPIO0_20, and set pru0_pru_r31_6 mode for GPIO3_20).
 
 Optionally, high-level software may visualize detected audio direction using a stripe of 16 LEDs hooked to two 74HC595 shift registers:
 
@@ -46,7 +50,7 @@ Optionally, high-level software may visualize detected audio direction using a s
 | P2.29        | gpio1_7  | P9.28 | gpio4_17  | SHCP   |
 | P2.31        | gpio1_19 | P9.23 | gpio7_11  | STCP   |
 
-
+ 
 For each microphone pair, one microphone is configured to output data on the rising clock edge, and the other is configured to output data on the falling edge. This way we need only 8 input GPIOs to capture data from all 16 microphones.
 
 Microphone breakout board and a PocketBeagle Cape are provided in KiCad format.
