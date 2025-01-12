@@ -179,6 +179,7 @@ Right now UAC2 Gadget is configured only for 8ch/32bps/24000kHz. With a few manu
 # Other Resources
 Below are various other CIC implementations and PDM microphone boards I've stumbled upon.
  * https://github.com/introlab/16SoundsUSB
+ * https://github.com/mkj/pru-mic
  * https://github.com/introlab/odas
  * https://respeaker.io/make_a_smart_speaker/
  * https://github.com/Scrashdown/PRU-Audio-Processing
