@@ -56,24 +56,15 @@
 /* Definition for unused interrupts */
 #define HOST_UNUSED		255
 
-/* Mapping sysevts to a channel. Each pair contains a sysevt, channel. */
-struct ch_map pru_intc_map[] = { {18, 3},
-				 {19, 1},
-				 {21, 0},	/* PRU0 to PRU 1, channel 0 */
-};
-
 struct my_resource_table {
 	struct resource_table base;
 
-	uint32_t offset[2]; /* Should match 'num' in actual definition */
+	uint32_t offset[1]; /* Should match 'num' in actual definition */
 
 	/* rpmsg vdev entry */
 	struct fw_rsc_vdev rpmsg_vdev;
 	struct fw_rsc_vdev_vring rpmsg_vring0;
 	struct fw_rsc_vdev_vring rpmsg_vring1;
-
-	/* intc definition */
-	struct fw_rsc_custom pru_ints;
 };
 
 #if !defined(__GNUC__)
@@ -87,13 +78,12 @@ struct my_resource_table {
 struct my_resource_table resourceTable __resource_table = {
 	{
 		1,              /* Resource table version: only version 1 is supported by the current driver */
-		2,              /* number of entries in the table */
+		1,              /* number of entries in the table */
 		{ 0, 0 },       /* reserved, must be zero */
 	},
 	/* offsets to entries */
 	{
 		offsetof(struct my_resource_table, rpmsg_vdev),
-		offsetof(struct my_resource_table, pru_ints),
 	},
 
 	/* rpmsg vdev entry */
@@ -111,39 +101,18 @@ struct my_resource_table resourceTable __resource_table = {
 	},
 	/* the two vrings */
 	{
-		0,					//da, will be populated by host, can't pass it in
+		FW_RSC_ADDR_ANY,			//da, will be populated by host, can't pass it in
 		16,					//align (bytes),
 		PRU_RPMSG_VQ0_SIZE,			//num of descriptors
 		0,					//notifyid, will be populated, can't pass right now
 		0					//reserved
 	},
 	{
-		0, 					//da, will be populated by host, can't pass it in
+		FW_RSC_ADDR_ANY,			//da, will be populated by host, can't pass it in
 		16, 					//align (bytes),
 		PRU_RPMSG_VQ1_SIZE, 			//num of descriptors
 		0, 					//notifyid, will be populated, can't pass right now
 		0 					//reserved
-	},
-
-	{
-		TYPE_CUSTOM, TYPE_PRU_INTS,
-		sizeof(struct fw_rsc_custom_ints),
-		{ /* PRU_INTS version */
-			{
-				0x0000,
-				/* Channel-to-host mapping, 255 for unused
-				 * 		Mapping Channel-1 to Host-1 (PRU0/1 R31 bit 31)
-				 * */
-				{
-					0, 1, HOST_UNUSED, 3, HOST_UNUSED,
-					HOST_UNUSED, HOST_UNUSED, HOST_UNUSED, HOST_UNUSED, HOST_UNUSED
-				},
-				/* Number of evts being mapped to channels */
-				(sizeof(pru_intc_map) / sizeof(struct ch_map)),
-				/* Pointer to the structure containing mapped events */
-				pru_intc_map,
-			},
-		},
 	},
 };
 

@@ -164,6 +164,12 @@ _start_16ch:
 	.section .text
 main_loop:
 
+	/* We have 54 cycles per clock level, so 108 cycle period.
+	 * This yields F_mclk = 333MHz / 108 = 3.083 MHz
+	 * Since we're reducing by 128, this yields:
+	 * 3.083 MHz / 128 = 24088 Samples/sec
+	 */
+
 	/* ---------- CLK 0 --------------------------------------*/
 	mov	RPDATA, r31			/* 1 */
 	clr	r30, r30, R30_CLK_PIN		/* 1 */
@@ -184,6 +190,12 @@ main_loop:
 	nop					/* 1 */
 	nop					/* 1 */
 
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+
 	/* ---------- CLK 1 --------------------------------------*/
 	mov	RPDATA, r31			/* 1 */
 	set	r30, r30, R30_CLK_PIN		/* 1 */
@@ -192,6 +204,13 @@ main_loop:
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
 	nop					/* 1 -> EXTRA 1 */
+
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+	nop					/* 1 */
+
 	handle_data8l				/* 32 = 4 * 8 */
 	jmp RJMPSUB				/* 1 jmp, 9 subroutine cycles*/
 
@@ -202,9 +221,9 @@ main_loop:
  * We use them to run the comb filters.
  */
 subroutine_dispatch_table_start:
-	/* 31 idle (nop) stages */
+	/* 31+64 idle (nop) stages */
 	.set i,0
-	.rept 31
+	.rept 95
 	   idle_subroutine
 	   .set i,i+1
 	.endr

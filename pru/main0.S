@@ -9,7 +9,7 @@
 #include "common.h"
 
 #define MIC_SLEEP_TIMEOUT_MS	10
-#define PRU_CYCLE_NS		((1000 * 1000 * 1000) / (200 * 1000 * 1000))
+#define PRU_CYCLE_NS		((1000 * 1000 * 1000) / (333 * 1000 * 1000))
 
 	.extern _start_16ch
 	.extern _start_8ch

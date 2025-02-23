@@ -13,10 +13,8 @@
  * GNU General Public License for more details.
  */
 
-/* 200 * 1000 * 1000 / (49 * 2) / 64 = 31887.7 */
-#define BEAGLEMIC_PCM_16CH_SAMPLE_RATE	31888
-/* 200 * 1000 * 1000 / (29 * 2) / 128 = 26939.6 */
-#define BEAGLEMIC_PCM_8CH_SAMPLE_RATE	26940
+/* 333 * 1000 * 1000 / (54 * 2) / 128 = 24088.7 */
+#define BEAGLEMIC_PCM_SAMPLE_RATE	24088
 
 #define BEAGLEMIC_PCM_FRAME_NBYTES	(16 * 2)
 

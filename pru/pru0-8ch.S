@@ -2,7 +2,7 @@
  *
  * PDM 8 channel acquisition.
  *
- * Copyright (c) 2018-2020 Dimitar Dimitrov <dimitar@dinux.eu>
+ * Copyright (c) 2018-2025 Dimitar Dimitrov <dimitar@dinux.eu>
  */
 
 /*
@@ -270,6 +270,12 @@ __pcm_output_latch_stage\N\()_next_stage:
 	__pcm_output_latch_stage 2, 21, 22, 23
 .endm
 
+.macro	fill_nops n
+	.rept   \n
+	nop
+	.endr
+.endm
+
 	.extern _start
 
 	.global	_start_8ch
@@ -282,8 +288,10 @@ _start_8ch:
 	.text
 	.section .text
 
-	/* We have 29 cycles per clock level, so 58 cycle period.
-	 * This yields F_mclk = 200MHz / 58 = 3.448 MHz
+	/* We have 54 cycles per clock level, so 108 cycle period.
+	 * This yields F_mclk = 333MHz / 108 = 3.083 MHz
+	 * Since we're reducing by 128, this yields:
+	 * 3.083 MHz / 128 = 24088 Samples/sec
 	 */
 main_loop:
 	mov	RPDATA, r31			/* 1 - part of CLK 1 cycle! */
@@ -298,6 +306,8 @@ subroutine_return:
 	handle_dbit r1, r9, r17, 1, RPDATA	/* 5 */
 	handle_dbit r2, r10, r18, 2, RPDATA	/* 5 */
 
+	fill_nops 25
+
 	/* ---------- CLK 1->0 --------------------------------------*/
 	clr	r30, r30, R30_CLK_PIN		/* 1 */
 
@@ -309,6 +319,8 @@ subroutine_return:
 	handle_dbit r5, r13, r21, 5, RPDATA     /* 5 */
 	handle_dbit r6, r14, r22, 6, RPDATA	/* 5 */
 	handle_dbit r7, r15, r23, 7, RPDATA	/* 5 */
+
+	fill_nops 25
 
 	/* We could coalesce the "return jump" from RJMPSUB
 	 * with the main loop back edge.  This would free

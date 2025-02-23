@@ -102,14 +102,14 @@ static const struct snd_pcm_hardware beaglemic_pcm_hw = {
 
 static bool valid_16ch_mode(struct snd_pcm_hw_params *hwparams)
 {
-	return params_rate(hwparams) == BEAGLEMIC_PCM_16CH_SAMPLE_RATE
+	return params_rate(hwparams) == BEAGLEMIC_PCM_SAMPLE_RATE
 		&& params_channels(hwparams) == 16
 		&& params_format(hwparams) == SNDRV_PCM_FORMAT_S16_LE;
 }
 
 static bool valid_8ch_mode(struct snd_pcm_hw_params *hwparams)
 {
-	return params_rate(hwparams) == BEAGLEMIC_PCM_8CH_SAMPLE_RATE
+	return params_rate(hwparams) == BEAGLEMIC_PCM_SAMPLE_RATE
 		&& params_channels(hwparams) == 8
 		&& params_format(hwparams) == SNDRV_PCM_FORMAT_S32_LE;
 }
@@ -337,7 +337,7 @@ static int rpmsg_beaglemic_probe(struct rpmsg_device *rpdev)
 
 	/* TODO - add controls via snd_ctl_add */
 
-	strcpy(idata->card->driver, "BeagleMic Audio Driver");
+	strcpy(idata->card->driver, "BeagleMicDriver");
 	strcpy(idata->card->shortname, "BeagleMic");
 	sprintf(idata->card->longname, "%s 0x%x/0x%x",
 		idata->card->shortname,

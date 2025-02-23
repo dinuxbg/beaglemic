@@ -8,7 +8,7 @@
 
 # Common flags
 CROSS_COMPILE ?= pru-
-CFLAGS += -g -Os
+CFLAGS += -g -Oz
 CFLAGS += -Wall -Wextra
 
 # Define this to squeeze code size by removing atexit, exit, constructors
@@ -16,12 +16,12 @@ CFLAGS += -Wall -Wextra
 CFLAGS += -minrt
 
 # Headers needed by the TI rpmsg library.
-CFLAGS += -I./include -I./include/am335x
+CFLAGS += -I./include -I./include/am62x
 
 # Per-PRU core flags. The -mmcu option will select the correct linker
 # script and will predefine mcu-specific macros.
-CFLAGS0 += -mmcu=am335x.pru0 -nostdlib -nodefaultlibs -nostartfiles
-CFLAGS1 += -mmcu=am335x.pru1
+CFLAGS0 += -mmcu=am62x.pru0 -nostdlib -nodefaultlibs -nostartfiles
+CFLAGS1 += -mmcu=am62x.pru1
 
 # List of source files to compile for each PRU core.
 SRC0 := main0.S pru0-16ch.S pru0-8ch.S

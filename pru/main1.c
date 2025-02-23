@@ -39,12 +39,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <pru_cfg.h>
-#include <pru_intc.h>
 #include <rsc_types.h>
 #include <pru_virtqueue.h>
 #include <pru_rpmsg.h>
 #include "resource_table_1.h"
+#include "intc_map_1.h"
 
 #include <pru/io.h>
 
@@ -66,8 +65,6 @@
 
 #define FROM_PEER			21
 
-
-#define CHAN_DESC			"Channel 31"
 #define CHAN_PORT			31
 
 /*
@@ -116,7 +113,7 @@ static void handle_host_interrupt(struct pru_rpmsg_transport *transport)
 	uint16_t src, dst, len;
 
 	/* Clear the event status */
-	CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
+	CT_INTC.STATUS_CLR_INDEX_REG_bit.STATUS_CLR_INDEX = FROM_ARM_HOST;
 
 	/* Receive all available messages, multiple messages can be sent per kick */
 	while (pru_rpmsg_receive(transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS) {
@@ -216,7 +213,7 @@ static void handle_peer_interrupt(struct pru_rpmsg_transport *transport)
 	unsigned int frame_counter;
 
 	/* Clear the event status */
-	CT_INTC.SICR_bit.STS_CLR_IDX = FROM_PEER;
+	CT_INTC.STATUS_CLR_INDEX_REG_bit.STATUS_CLR_INDEX = FROM_PEER;
 
 	if (!stream.initialized)
 		return;
@@ -249,12 +246,8 @@ int main(void)
 	struct pru_rpmsg_transport transport;
 	volatile uint8_t *status;
 
-	/* allow OCP master port access by the PRU so the PRU
-	 * can read external memories */
-	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
-
-	/* clear the status of the PRU-ICSS system event that the ARM will use to 'kick' us */
-	CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
+	/* Clear the status of the PRU-ICSS system event that the ARM will use to 'kick' us */
+	CT_INTC.STATUS_CLR_INDEX_REG_bit.STATUS_CLR_INDEX = FROM_ARM_HOST;
 
 	/* Make sure the Linux drivers are ready for RPMsg communication */
 	status = &resourceTable.rpmsg_vdev.status;
@@ -269,7 +262,7 @@ int main(void)
 		       FROM_ARM_HOST);
 
 	/* Create the RPMsg channel between the PRU and ARM user space using the transport structure. */
-	while (pru_rpmsg_channel(RPMSG_NS_CREATE, &transport, RPMSG_BEAGLEMIC_CHAN_NAME, CHAN_DESC, CHAN_PORT) != PRU_RPMSG_SUCCESS)
+	while (pru_rpmsg_channel(RPMSG_NS_CREATE, &transport, RPMSG_BEAGLEMIC_CHAN_NAME, CHAN_PORT) != PRU_RPMSG_SUCCESS)
 		;
 
 	while (1) {

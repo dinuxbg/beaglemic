@@ -1,0 +1,55 @@
+From 2c028f5d1202e51576c7c1d5a22d34f6e0717b34 Mon Sep 17 00:00:00 2001
+From: Dimitar Dimitrov <dimitar@dinux.eu>
+Date: Sat, 22 Mar 2025 21:28:32 +0200
+Subject: [PATCH] Add pinmux and firmware for BeagleMic
+
+TODO - rework and integrate as proper DTBO!
+
+Signed-off-by: Dimitar Dimitrov <dimitar@dinux.eu>
+---
+ .../boot/dts/ti/k3-am6232-pocketbeagle2.dts   | 32 +++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-am6232-pocketbeagle2.dts b/arch/arm64/boot/dts/ti/k3-am6232-pocketbeagle2.dts
+index 79cf9b90aab87..ad4845abf415d 100644
+--- a/arch/arm64/boot/dts/ti/k3-am6232-pocketbeagle2.dts
++++ b/arch/arm64/boot/dts/ti/k3-am6232-pocketbeagle2.dts
+@@ -571,3 +571,35 @@ &main_spi0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_spi0_pins_default>;
+ };
++
++
++/* TODO - make me a proper DTBO! */
++&{/} {
++
++        pru0_beaglemic_pins_default: pru0-beaglemic-default-pins {
++                pinctrl-single,pins = <
++                        AM62X_IOPAD(0x00D0, PIN_INPUT, 4)   /* P2.24: (Y23) VOUT0_DATA6.PR0_PRU0_GPO14 */
++			AM62X_IOPAD(0x01E8, PIN_DISABLE, 7) /* P1.36: (B17) I2C1_SCL.GPIO1_28 */
++			AM62X_IOPAD(0x00E0, PIN_INPUT, 6)   /* P1.36: (V20) VOUT0_DATA10.PR0_PRU0_GPI0 */
++			AM62X_IOPAD(0x01EC, PIN_DISABLE, 7) /* P1.33: (A17) I2C1_SDA.GPIO1_29 */
++			AM62X_IOPAD(0x00E4, PIN_INPUT, 6)   /* P1.33: (AA23) VOUT0_DATA11.PR0_PRU0_GPI1 */
++			AM62X_IOPAD(0x00E8, PIN_INPUT, 6)   /* P2.32: (AB25) VOUT0_DATA12.PR0_PRU0_GPI2 */
++			AM62X_IOPAD(0x00EC, PIN_INPUT, 6)   /* P2.30: (AA24) VOUT0_DATA13.PR0_PRU0_GPI3 */
++			AM62X_IOPAD(0x00F0, PIN_INPUT, 6)   /* P1.31: (Y22) VOUT0_DATA14.PR0_PRU0_GPI4 */
++			AM62X_IOPAD(0x00F4, PIN_INPUT, 6)   /* P2.34: (AA21) VOUT0_DATA15.PR0_PRU0_GPI5 */
++			AM62X_IOPAD(0x00F8, PIN_INPUT, 6)   /* P2.28: (AB24) VOUT0_HSYNC.PR0_PRU0_GPI6 */
++			AM62X_IOPAD(0x00FC, PIN_INPUT, 6)   /* P1.29: (Y20) VOUT0_DE.PR0_PRU0_GPI7 */
++                >;
++        };
++};
++
++
++&pru0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pru0_beaglemic_pins_default>;
++
++	firmware-name = "pru-core0.elf";
++};
++&pru1 {
++	firmware-name = "pru-core1.elf";
++};
+-- 
+2.48.1
+
